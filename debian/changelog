@@ -1,3 +1,35 @@
+mini-dinstall (0.6.21) unstable; urgency=medium
+
+  * Improve daemonizing: Reopen file descriptors 0, 1, 2 to /dev/null.
+    This is important as it can corrupt the generated files, which is
+    why urgency medium is used.
+    Closes: #294353.
+  * Fixed a bunch of spelling mistakes in the man page. Closes: #295096.
+
+ -- Thomas Viehmann <tv@beamnet.de>  Tue, 15 Feb 2005 18:44:09 +0100
+
+mini-dinstall (0.6.20) unstable; urgency=low
+
+  * Autmatically accomodate for the current python version
+    during build. Closes: #293719.
+    Idea for patch by Tollef Fog Heen of Canonical/Ubuntu, thanks a lot.
+  * Fix man page typo. Closes: #271141.
+  * Rename example file sign-release.sh to match example config.
+    Closes: #259755.
+
+ -- Thomas Viehmann <tv@beamnet.de>  Mon,  7 Feb 2005 21:04:02 +0100
+
+mini-dinstall (0.6.19) unstable; urgency=low
+
+  * Important bug fix and very minor cosmetic update release only, maybe this
+    can make it for sarge.
+  * Retry a couple of times when dup2 returns EBUSY. (Closes: #265513)
+  * Change default distributions to unstable (only) and default
+    architectures to all, i386. (No offence to people using other arches,
+    but that's my setup.) Closes: #262700.
+
+ -- Thomas Viehmann <tv@beamnet.de>  Sun, 15 Aug 2004 11:22:38 +0200
+
 mini-dinstall (0.6.18) unstable; urgency=low
 
   * I'm honored to be the new maintainer. (Thanks Graham.)

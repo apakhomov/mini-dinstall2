@@ -19,6 +19,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 import os, re, sys, string, stat
+from minidinstall import misc
 
 class GPGSigVerifierException(Exception):
     def __init__(self, value):
@@ -50,8 +51,8 @@ class GPGSigVerifier:
         pid = os.fork()
         if pid == 0:
             os.close(stdin)
-            os.dup2(stdout, 1)
-            os.dup2(stdout, 2)
+            misc.dup2(stdout, 1)
+            misc.dup2(stdout, 2)
             args = []
             for keyring in self._keyrings:
                 args.append('--keyring')

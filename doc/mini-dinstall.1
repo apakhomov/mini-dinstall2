@@ -20,7 +20,7 @@
 .TH MINI\-DINSTALL 1 "December 29, 2003" "Debian Project" mini\-dinstall
 .\"
 .SH NAME
-mini\-dinstall \- daemon for updating Debian packages in a repostory
+mini\-dinstall \- daemon for updating Debian packages in a repository
 .\"
 .SH SYNOPSIS
 .B mini\-dinstall
@@ -28,7 +28,7 @@ mini\-dinstall \- daemon for updating Debian packages in a repostory
 .\"
 .SH DESCRIPTION
 \fBmini\-dinstall\fR is a tool for installing Debian packages into a personal
-APT repostory; it is very similar to the \fBdinstall\fR tool on auric: it takes
+APT repository; it is very similar to the \fBdinstall\fR tool on auric: it takes
 a changes file and installs it into the Debian archive.
 .PP
 The main focus of operation is a changes file.
@@ -49,7 +49,7 @@ background and continually checks the queue, and will process it whenever it
 has changed.
 .PP
 The optional \fIdirectory\fR argument specifies the root directory of the
-queue. If no argument is specfied, the value from the configuration file is
+queue. If no argument is specified, the value from the configuration file is
 used.
 .PP
 The following options can be used:
@@ -103,7 +103,7 @@ name = value
 .RE
 .PP
 combinations, which set a configuration parameter for that distribution (or the
-default one). Lists should be seperated by commas, strings need only be
+default one). Lists should be separated by commas, strings need only be
 enclosed with quotes if they contain spaces or commas, and boolean values
 should be 1 for true, and 0 for false.
 .PP
@@ -128,7 +128,7 @@ parameter will modify the default list; it is generally better to modify
 package.
 .TP
 .B logfile
-The filename (relative to \fBarchive_dir\fR) where information will be logged.
+The filename (relative to \fBarchivedir\fR) where information will be logged.
 Defaults to \*(lqmini-dinstall.log\*(rq.
 .TP
 .B mail_log_flush_count
@@ -216,7 +216,7 @@ Whether or not old packages should be kept, instead of deleting them when newer
 versions of the same packages are uploaded. Defaults to false.
 .TP
 .B mail_on_success
-Whether to mail on succesful installation. Defaults to true.
+Whether to mail on successful installation. Defaults to true.
 .TP
 .B max_retry_time
 The maximum amount of time to wait for an incomplete upload before rejecting
@@ -261,7 +261,7 @@ signature in a file named \fIRelease.gpg\fR.
 One convenient way to use \fBmini-dinstall\fR is in combination with
 \fBdput\fR's \(lqlocal\(rq method. The author generally tests his Debian
 packages by using \fBdput\fR to upload them to a local repository, and then
-uses APT's \(lqfile\(rq method to retrive them locally. Here's a sample
+uses APT's \(lqfile\(rq method to retrieve them locally. Here's a sample
 \fBdput\fR stanza:
 .PP
 .NF

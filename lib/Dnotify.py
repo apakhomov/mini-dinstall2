@@ -20,6 +20,7 @@
 
 import os, re, sys, string, stat, threading, Queue, time
 import logging
+from minidinstall import misc
 
 class DnotifyException(Exception):
     def __init__(self, value):
@@ -170,7 +171,7 @@ class DnotifyThread(threading.Thread):
         pid = os.fork()
         if pid == 0:
             os.close(infd)
-            os.dup2(outfd, 1)
+            misc.dup2(outfd, 1)
             args = ['dnotify', '-m', '-c', '-d', '-a', '-r'] + list(self._dirs) + ['-e', 'printf', '"{}\\0"']
             os.execv('/usr/bin/dnotify', args)
             os.exit(1)

@@ -31,6 +31,7 @@ from minidinstall.Dnotify import *
 from minidinstall.DebianSigVerifier import *
 from minidinstall.GPGSigVerifier import *
 from minidinstall.version import *
+from minidinstall import misc
 
 debchanges_re = re.compile('([-a-z0-9+.]+)_(.+?)_([-a-zA-Z0-9]+)\.changes$')
 debpackage_re = re.compile('([-a-z0-9+.]+)_(.+?)_([-a-zA-Z0-9]+)\.u?deb$')
@@ -61,8 +62,8 @@ mail_to = getpass.getuser()
 mail_server = 'localhost'
 incoming_permissions = 0750
 
-default_architectures = ["all", "i386", "powerpc", "sparc"]
-default_distributions = ("woody", "sid")
+default_architectures = ["all", "i386"]
+default_distributions = ("unstable",)
 
 distributions = {}
 scantime = 60
@@ -1041,7 +1042,7 @@ class ArchiveDirIndexer(threading.Thread):
             os.chdir(self._dir)
             os.chdir('..')
             os.close(infd)
-            os.dup2(outfd, 1)
+            misc.dup2(outfd, 1)
             os.execvp('apt-ftparchive', cmdline)
             os.exit(1)
         os.close(outfd)
@@ -1407,6 +1408,10 @@ if not batch_mode:
     os.close(0)
     os.close(1)
     os.close(2)
+    # unix file descriptor allocation ensures that the followin are fd 0,1,2
+    sys.stdin = open("/dev/null")
+    sys.stdout = open("/dev/null")
+    sys.stderr = open("/dev/null")
     logger.debug("Finished daemonizing (pid %s)" % (os.getpid(),))
 
 lockfile = open(lockfilename, 'w')

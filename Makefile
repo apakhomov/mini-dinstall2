@@ -1,6 +1,8 @@
 # Makefile for mini-dinstall
 
-pkgdir = $(DESTDIR)/usr/lib/python2.3/site-packages/minidinstall
+PYTHONVERSION=$(shell python -c 'import sys; print "%d.%d"%(sys.version_info[:2])')
+
+pkgdir = $(DESTDIR)/usr/lib/python$(PYTHONVERSION)/site-packages/minidinstall
 bindir = $(DESTDIR)/usr/bin
 mandir = $(DESTDIR)/usr/share/man/man1
 
