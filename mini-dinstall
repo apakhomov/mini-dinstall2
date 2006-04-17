@@ -293,7 +293,7 @@ if not configp.has_option('DEFAULT', 'archive_style'):
     logging.shutdown()
     sys.exit(1)
 
-default_verify_sigs = os.access('/usr/share/keyrings/debian-keyring.gpg', os.R_OK)
+default_verify_sigs = os.access('/usr/share/keyrings/ubuntu-archive-keyring.gpg', os.R_OK)
 default_extra_keyrings = []
 default_keyrings = None
 

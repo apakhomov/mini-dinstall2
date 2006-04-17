@@ -8,7 +8,7 @@ Standards-Version: 3.6.1
 Package: mini-dinstall
 Architecture: all
 Depends: ${python:Depends}, python-apt, apt-utils
-Suggests: debian-keyring
+Suggests: ubuntu-keyring
 Description: daemon for updating Debian packages in a repository
  This program implements a miniature version of the "dinstall" program
  which installs packages in the Debian archive.  It doesn't require a

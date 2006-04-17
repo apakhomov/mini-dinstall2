@@ -1,3 +1,10 @@
+mini-dinstall (0.6.21ubuntu1) dapper; urgency=low
+
+  * Ubuntufication: change all /usr/share/keyrings/debian-keyring.gpg to
+    /usr/share/keyrings/ubuntu-archive-keyring.gpg (Closes: Malone #3417).
+
+ -- Jeremie Corbier <jeremie.corbier@resel.enst-bretagne.fr>  Mon, 17 Apr 2006 21:00:09 +0200
+
 mini-dinstall (0.6.21) unstable; urgency=medium
 
   * Improve daemonizing: Reopen file descriptors 0, 1, 2 to /dev/null.
