@@ -1,3 +1,14 @@
+mini-dinstall (0.6.21-0.1) unstable; urgency=low
+
+  * Non-maintainer upload (with maintainer permission).
+  * Update package to the new python policy (Closes: #380871).
+  * Bump Standards-Version to 3.7.2.
+  * Fix Makefile to use pyversions instead of custom hack to guess current
+    python version.
+  * Move debhelper to B-Depends (instead of B-D-I).
+
+ -- Pierre Habouzit <madcoder@debian.org>  Tue,  1 Aug 2006 21:13:37 +0200
+
 mini-dinstall (0.6.21) unstable; urgency=medium
 
   * Improve daemonizing: Reopen file descriptors 0, 1, 2 to /dev/null.

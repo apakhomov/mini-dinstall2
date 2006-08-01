@@ -2,8 +2,9 @@ Source: mini-dinstall
 Priority: optional
 Section: devel
 Maintainer: Thomas Viehmann <tv@beamnet.de>
-Build-Depends-Indep: debhelper (>= 4.1.25), python
-Standards-Version: 3.6.1
+Build-Depends: debhelper (>= 4.1.25)
+Build-Depends-Indep: python-dev, python-support (>= 0.3)
+Standards-Version: 3.7.2
 
 Package: mini-dinstall
 Architecture: all

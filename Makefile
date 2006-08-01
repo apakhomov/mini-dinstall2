@@ -1,6 +1,6 @@
 # Makefile for mini-dinstall
 
-PYTHONVERSION=$(shell python -c 'import sys; print "%d.%d"%(sys.version_info[:2])')
+PYTHONVERSION=$(shell pyversions -dv)
 
 pkgdir = $(DESTDIR)/usr/lib/python$(PYTHONVERSION)/site-packages/minidinstall
 bindir = $(DESTDIR)/usr/bin
