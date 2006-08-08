@@ -1,9 +1,26 @@
+mini-dinstall (0.6.21ubuntu2) edgy; urgency=low
+
+  * Merge from debian unstable.
+
+ -- Jeremie Corbier <jcorbier@ubuntu.com>  Tue,  8 Aug 2006 11:49:50 +0200
+
 mini-dinstall (0.6.21ubuntu1) dapper; urgency=low
 
   * Ubuntufication: change all /usr/share/keyrings/debian-keyring.gpg to
     /usr/share/keyrings/ubuntu-archive-keyring.gpg (Closes: Malone #3417).
 
  -- Jeremie Corbier <jeremie.corbier@resel.enst-bretagne.fr>  Mon, 17 Apr 2006 21:00:09 +0200
+
+mini-dinstall (0.6.21-0.1) unstable; urgency=low
+
+  * Non-maintainer upload (with maintainer permission).
+  * Update package to the new python policy (Closes: #380871).
+  * Bump Standards-Version to 3.7.2.
+  * Fix Makefile to use pyversions instead of custom hack to guess current
+    python version.
+  * Move debhelper to B-Depends (instead of B-D-I).
+
+ -- Pierre Habouzit <madcoder@debian.org>  Tue,  1 Aug 2006 21:13:37 +0200
 
 mini-dinstall (0.6.21) unstable; urgency=medium
 
