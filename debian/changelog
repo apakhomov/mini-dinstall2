@@ -1,3 +1,12 @@
+mini-dinstall (0.6.21ubuntu3) gutsy; urgency=low
+
+  * Merge from debian unstable, remaining changes:
+    - Ubuntufication: change all /usr/share/keyrings/debian-keyring.gpg to
+      /usr/share/keyrings/ubuntu-archive-keyring.gpg (Closes: Malone #3417).
+  * Changed maintainer field to MOTU.
+
+ -- Luke Yelavich <themuso@ubuntu.com>  Tue, 15 May 2007 19:50:27 +1000
+
 mini-dinstall (0.6.21ubuntu2) edgy; urgency=low
 
   * Merge from debian unstable.
