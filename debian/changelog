@@ -1,3 +1,31 @@
+mini-dinstall (0.6.22ubuntu1) hardy; urgency=low
+
+  * Merge from debian unstable, remaining changes:
+    - Ubuntufication: change all /usr/share/keyrings/debian-keyring.gpg to
+      /usr/share/keyrings/ubuntu-archive-keyring.gpg.
+    - Update maintainer field as per spec.
+  * Modify Maintainer value to match the DebianMaintainerField
+    specification.
+
+ -- Luke Yelavich <themuso@ubuntu.com>  Thu, 25 Oct 2007 22:38:33 +1000
+
+mini-dinstall (0.6.22) unstable; urgency=low
+
+  [ Guido Guenther ]
+  * Create the release files in the correct subdirs with archive-style =
+    simple-subdir so it works with secure-apt (Closes: #343371)
+
+  [ Christoph Goehre ]
+  * I'm the new Maintainer (Closes: #414621)
+  * build package with cdbs
+  * add XS-Vcs tags to git archive
+  * move python-dev and python-support to B-Depends (instead of B-D-I) to clam
+    lintian
+  * add bz2 support for package files (Closes: #323925)
+  * use FQDN hostname for outgoing mail (Closes: #385314)
+
+ -- Christoph Goehre <christoph.goehre@gmx.de>  Sat, 06 Oct 2007 12:07:44 +0200
+
 mini-dinstall (0.6.21ubuntu3) gutsy; urgency=low
 
   * Merge from debian unstable, remaining changes:
@@ -19,6 +47,13 @@ mini-dinstall (0.6.21ubuntu1) dapper; urgency=low
     /usr/share/keyrings/ubuntu-archive-keyring.gpg (Closes: Malone #3417).
 
  -- Jeremie Corbier <jeremie.corbier@resel.enst-bretagne.fr>  Mon, 17 Apr 2006 21:00:09 +0200
+
+mini-dinstall (0.6.21-0.2) unstable; urgency=low
+
+  * NMU with maintainers approval
+  * update packages files atomically (Closes: #324855)
+
+ -- Guido Guenther <agx@sigxcpu.org>  Thu, 23 Aug 2007 15:51:12 +0200
 
 mini-dinstall (0.6.21-0.1) unstable; urgency=low
 
