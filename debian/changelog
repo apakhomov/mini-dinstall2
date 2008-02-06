@@ -1,3 +1,26 @@
+mini-dinstall (0.6.23ubuntu1) hardy; urgency=low
+
+  * Merge from Debian unstable, remaining changes:
+    - Ubuntufication: change all /usr/share/keyrings/debian-keyring.gpg to
+      /usr/share/keyrings/ubuntu-archive-keyring.gpg.
+    - debian/control:
+      + Update maintainer field. 
+
+ -- Michele Angrisano <micheleangrisano@ubuntu.com>  Wed, 06 Feb 2008 23:33:34 +0100
+
+mini-dinstall (0.6.23) unstable; urgency=low
+
+  * use templates to generate success email (Closes: #451949)
+  * add SHA256 hashes in release files (Closes: #453032)
+  * don't fail on missing child processes in external hash generation
+  * merge identically hash generation for release file in mini-dinstall and
+    ChangeFile.py into misc.py
+  * change XS-Vcs tags to Vcs
+  * change Standard-Version to 3.7.3 and national encoding of copyright to
+    UTF-8
+
+ -- Christoph Goehre <christoph.goehre@gmx.de>  Sun, 03 Feb 2008 10:53:25 +0100
+
 mini-dinstall (0.6.22ubuntu1) hardy; urgency=low
 
   * Merge from debian unstable, remaining changes:

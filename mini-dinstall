@@ -31,7 +31,7 @@ from minidinstall.Dnotify import *
 from minidinstall.DebianSigVerifier import *
 from minidinstall.GPGSigVerifier import *
 from minidinstall.version import *
-from minidinstall import misc
+import minidinstall.misc
 
 debchanges_re = re.compile('([-a-z0-9+.]+)_(.+?)_([-a-zA-Z0-9]+)\.changes$')
 debpackage_re = re.compile('([-a-z0-9+.]+)_(.+?)_([-a-zA-Z0-9]+)\.u?deb$')
@@ -67,6 +67,14 @@ default_distributions = ("unstable",)
 
 distributions = {}
 scantime = 60
+
+mail_subject_template = "mini-dinstall: Successfully installed %(source)s %(version)s to %(distribution)s"
+mail_body_template = """Package: %(source)s
+Maintainer: %(maintainer)s
+Changed-By: %(changed-by)s
+Changes:
+%(changes_without_dot)s
+"""
 
 def usage(ecode, ver_only=None):
     print "mini-dinstall", pkg_version
@@ -186,9 +194,11 @@ logger.debug("Reading config files: %s" % (configfile_names,))
 configp.read(configfile_names)
 
 class SubjectSpecifyingLoggingSMTPHandler(logging.handlers.SMTPHandler):
-    def __init__(self, subject, *args, **kwargs):
-        self._subject = subject
+    def __init__(self, *args, **kwargs):
         apply(logging.handlers.SMTPHandler.__init__, [self] + list(args) + ['dummy'], kwargs)
+
+    def setSubject(self, subject):
+        self._subject = subject
 
     def getSubject(self, record):
         return re.sub('%l', record.levelname, self._subject)
@@ -206,7 +216,8 @@ if not (configp.has_option('DEFAULT', 'mail_log_level') and configp.get('DEFAULT
         mail_log_flush_count = configp.getint('DEFAULT', 'mail_log_flush_count')
     if configp.has_option('DEFAULT', 'mail_log_flush_level'):
         mail_log_flush_level = logging.__dict__[configp.get('DEFAULT', 'mail_log_flush_level')]
-    mail_smtp_handler = SubjectSpecifyingLoggingSMTPHandler('mini-dinstall log notice (%l)', mail_server, 'Mini-Dinstall <%s@%s>' % (getpass.getuser(),socket.getfqdn()), [mail_to])
+    mail_smtp_handler = SubjectSpecifyingLoggingSMTPHandler(mail_server, 'Mini-Dinstall <%s@%s>' % (getpass.getuser(),socket.getfqdn()), [mail_to])
+    mail_smtp_handler.setSubject('mini-dinstall log notice (%l)')
     mail_handler = logging.handlers.MemoryHandler(mail_log_flush_count, flushLevel=mail_log_flush_level, target=mail_smtp_handler)
 
     mail_handler.setLevel(mail_log_level)
@@ -313,6 +324,10 @@ if configp.has_option('DEFAULT', 'keyrings'):
     default_keyrings = re.split(', ?', configp.get('DEFAULT', 'keyrings'))
 if configp.has_option('DEFAULT', 'use_dnotify'):
     use_dnotify = configp.getboolean('DEFAULT', 'use_dnotify')
+if configp.has_option('DEFAULT', 'mail_subject_template'):
+    mail_subject_template = configp.get('DEFAULT', 'mail_subject_template', 1)
+if configp.has_option('DEFAULT', 'mail_body_template'):
+    mail_body_template = configp.get('DEFAULT', 'mail_body_template', 1)
 
 sects = configp.sections()
 if not len(sects) == 0:
@@ -703,9 +718,9 @@ class ArchiveDir:
         if self._mail_on_success:
             self._success_logger = logging.Logger("mini-dinstall." + self._name)
             self._success_logger.setLevel(logging.DEBUG)
-            handler = SubjectSpecifyingLoggingSMTPHandler('mini-dinstall success notice', mail_server, 'Mini-Dinstall <%s@%s>' % (getpass.getuser(),socket.getfqdn()), [mail_to])
-            handler.setLevel(logging.DEBUG)
-            self._success_logger.addHandler(handler)
+            self.mailHandler = SubjectSpecifyingLoggingSMTPHandler(mail_server, 'Mini-Dinstall <%s@%s>' % (getpass.getuser(),socket.getfqdn()), [mail_to])
+            self.mailHandler.setLevel(logging.DEBUG)
+            self._success_logger.addHandler(self.mailHandler)
         self._clean_targets = []
 
 #         self._filerefmap = {}
@@ -772,7 +787,9 @@ class ArchiveDir:
         do_rename(changefilename, target)
         self._logger.info('Successfully installed %s %s to %s' % (sourcename, version, self._name))
         if self._mail_on_success:
-            self._success_logger.info('Successfully installed %s %s to %s' % (sourcename, version, self._name))
+            changefile ['changes_without_dot'] = misc.format_changes(changefile['changes'])
+            self.mailHandler.setSubject(mail_subject_template % changefile)
+            self._success_logger.info(mail_body_template % changefile)
         
         if self._post_install_script:
             try:
@@ -1112,50 +1129,27 @@ class ArchiveDirIndexer(threading.Thread):
                     return 1
         return 0
 
-    # Hacked up from ChangeFile.py; FIXME: merge the two
     def _get_file_sum(self, type, filename):
-        if os.access('/usr/bin/%ssum' % (type,), os.X_OK):
-            cmd = '/usr/bin/%ssum %s' % (type, filename,)
-            self._logger.debug("Running: %s" % (cmd,))
-            child = popen2.Popen3(cmd, 1)
-            child.tochild.close()
-            erroutput = child.childerr.read()
-            child.childerr.close()
-            if erroutput != '':
-                child.fromchild.close()
-                raise DinstallException("%ssum returned error output \"%s\"" % (type, erroutput,))
-            (sum, filename) = string.split(child.fromchild.read(), None, 1)
-            child.fromchild.close()
-            status = child.wait()
-            if not (status is None or (os.WIFEXITED(status) and os.WEXITSTATUS(status) == 0)):
-                if os.WIFEXITED(status):
-                    msg = "%ssum exited with error code %d" % (type, os.WEXITSTATUS(status),)
-                elif os.WIFSTOPPED(status):
-                    msg = "%ssum stopped unexpectedly with signal %d" % (type, os.WSTOPSIG(status),)
-                elif os.WIFSIGNALED(status):
-                    msg = "%ssum died with signal %d" % (type, os.WTERMSIG(status),)
-                raise DinstallException(msg)
-            return sum.strip()
-        if type == 'md5':
-            import md5
-            f = open(filename)
-            md5sum = md5.new()
-            buf = f.read(8192)
-            while buf != '':
-                md5sum.update(buf)
-                buf = f.read(8192)
-            return md5sum.hexdigest()
-        elif type == 'sha1':
-            import sha
-            f = open(filename)
-            shasum = sha.new()
-            buf = f.read(8192)
-            while buf != '':
-                shasum.update(buf)
-                buf = f.read(8192)
-            return shasum.hexdigest()
+        ret = misc.get_file_sum(self, type, filename)
+        if ret:
+            return ret
         else:
             raise DinstallException('cannot compute hash of type %s; no builtin method or /usr/bin/%ssum', type, type)
+
+    def _do_hash(self, hash, indexfiles, f):
+        """
+        write hash digest into filehandle
+
+        @param hash: used hash algorithm
+        @param indexfiles: system architectures
+        @param f: file handle
+        """
+        f.write("%s%s:\n" % (hash.upper(), ['', 'Sum'][hash == 'md5']))
+        for file in indexfiles:
+            absfile = self._abspath(file)
+            h = self._get_file_sum(hash, absfile)
+            size = os.stat(absfile)[stat.ST_SIZE]
+            f.write(' %s% 16d %s\n' % (h, size, os.path.basename(absfile)))
 
     def _index_all(self, force=None):
         self._index(self._arches + ['source'], force)
@@ -1346,18 +1340,8 @@ class SimpleSubdirArchiveDirIndexer(ArchiveDirIndexer):
             f.write('Architectures: ' + arch + '\n')
             if self._release_description:
                 f.write('Description: ' + self._release_description + '\n')
-            f.write('MD5Sum:\n')
-            for file in indexfiles:
-                absfile = self._abspath(file)
-                md5sum = self._get_file_sum('md5', absfile)
-                size = os.stat(absfile)[stat.ST_SIZE]
-                f.write(' %s% 16d %s\n' % (md5sum, size, os.path.basename(absfile)))
-            f.write('SHA1:\n')
-            for file in indexfiles:
-                absfile = self._abspath(file)
-                shasum = self._get_file_sum('sha1', absfile)
-                size = os.stat(absfile)[stat.ST_SIZE]
-                f.write(' %s% 16d %s\n' % (shasum, size, os.path.basename(absfile)))
+            for hash in [ 'md5', 'sha1', 'sha256' ]:
+                    self._do_hash(hash, indexfiles, f)
             f.close()
             if self._sign_releasefile(os.path.basename(tmpname), self._abspath(arch)):
                 os.rename(tmpname, targetname)
@@ -1444,18 +1428,8 @@ class FlatArchiveDirIndexer(ArchiveDirIndexer):
         f.write('Architectures: ' + string.join(self._arches, ' ') + '\n')
         if self._release_description:
             f.write('Description: ' + self._release_description + '\n')
-        f.write('MD5Sum:\n')
-        for file in indexfiles:
-            absfile = self._abspath(file)
-            md5sum = self._get_file_sum('md5', absfile)
-            size = os.stat(absfile)[stat.ST_SIZE]
-            f.write(' %s% 16d %s\n' % (md5sum, size, file))
-        f.write('SHA1:\n')
-        for file in indexfiles:
-            absfile = self._abspath(file)
-            shasum = self._get_file_sum('sha1', absfile)
-            size = os.stat(absfile)[stat.ST_SIZE]
-            f.write(' %s% 16d %s\n' % (shasum, size, file))
+        for hash in [ 'md5', 'sha1', 'sha256' ]:
+            self._do_hash(hash, indexfiles, f)
         f.close()
         if self._sign_releasefile(tmpname, self._abspath()):
             os.rename(tmpname, targetname)
