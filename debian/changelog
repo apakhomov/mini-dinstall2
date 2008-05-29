@@ -1,3 +1,20 @@
+mini-dinstall (0.6.24ubuntu1) intrepid; urgency=low
+
+  * Merge from Debian unstable, remaining Ubuntu changes:
+    - Change all occurrences of /usr/share/keyrings/debian-keyring.gpg to
+      /usr/share/keyrings/ubuntu-archive-keyring.gpg.
+    - minidinstall/version.py: set current version.
+    - debian/control: update Maintainer field as per spec.
+
+ -- Luca Falavigna <dktrkranz@ubuntu.com>  Thu, 29 May 2008 23:58:49 +0200
+
+mini-dinstall (0.6.24) unstable; urgency=low
+
+  * correct manpage formatting
+  * fix crash in hash generation for Release file
+
+ -- Christoph Goehre <christoph.goehre@gmx.de>  Sun, 06 Apr 2008 18:46:31 +0200
+
 mini-dinstall (0.6.23ubuntu1) hardy; urgency=low
 
   * Merge from Debian unstable, remaining changes:
