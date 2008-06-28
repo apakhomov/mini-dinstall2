@@ -1,3 +1,57 @@
+mini-dinstall (0.6.25) unstable; urgency=low
+
+  * add experimental release support to Release file. Thanks to Stephan
+    Suerken (Closes: #336232)
+  * use '--db' to speed up apt-ftparchive run (Closes: #225483)
+  * check new Checksums-* fields in .dsc and .changes
+  * adjust manpage format and Standards-Version
+
+ -- Christoph Goehre <christoph.goehre@gmx.de>  Sat, 28 Jun 2008 19:15:56 +0200
+
+mini-dinstall (0.6.24) unstable; urgency=low
+
+  * correct manpage formatting
+  * fix crash in hash generation for Release file
+
+ -- Christoph Goehre <christoph.goehre@gmx.de>  Sun, 06 Apr 2008 18:46:31 +0200
+
+mini-dinstall (0.6.23) unstable; urgency=low
+
+  * use templates to generate success email (Closes: #451949)
+  * add SHA256 hashes in release files (Closes: #453032)
+  * don't fail on missing child processes in external hash generation
+  * merge identically hash generation for release file in mini-dinstall and
+    ChangeFile.py into misc.py
+  * change XS-Vcs tags to Vcs
+  * change Standard-Version to 3.7.3 and national encoding of copyright to
+    UTF-8
+
+ -- Christoph Goehre <christoph.goehre@gmx.de>  Sun, 03 Feb 2008 10:53:25 +0100
+
+mini-dinstall (0.6.22) unstable; urgency=low
+
+  [ Guido Guenther ]
+  * Create the release files in the correct subdirs with archive-style =
+    simple-subdir so it works with secure-apt (Closes: #343371)
+
+  [ Christoph Goehre ]
+  * I'm the new Maintainer (Closes: #414621)
+  * build package with cdbs
+  * add XS-Vcs tags to git archive
+  * move python-dev and python-support to B-Depends (instead of B-D-I) to clam
+    lintian
+  * add bz2 support for package files (Closes: #323925)
+  * use FQDN hostname for outgoing mail (Closes: #385314)
+
+ -- Christoph Goehre <christoph.goehre@gmx.de>  Sat, 06 Oct 2007 12:07:44 +0200
+
+mini-dinstall (0.6.21-0.2) unstable; urgency=low
+
+  * NMU with maintainers approval
+  * update packages files atomically (Closes: #324855)
+
+ -- Guido Guenther <agx@sigxcpu.org>  Thu, 23 Aug 2007 15:51:12 +0200
+
 mini-dinstall (0.6.21-0.1) unstable; urgency=low
 
   * Non-maintainer upload (with maintainer permission).

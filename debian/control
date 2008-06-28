@@ -1,14 +1,16 @@
 Source: mini-dinstall
 Priority: optional
 Section: devel
-Maintainer: Thomas Viehmann <tv@beamnet.de>
-Build-Depends: debhelper (>= 4.1.25)
-Build-Depends-Indep: python-dev, python-support (>= 0.3)
-Standards-Version: 3.7.2
+Maintainer: Christoph Goehre <christoph.goehre@gmx.de>
+Uploaders: Guido Guenther <agx@sigxcpu.org>
+Build-Depends: cdbs, debhelper (>= 4.1.25), python-dev, python-support (>= 0.3)
+Standards-Version: 3.8.0
+Vcs-Git: git://git.debian.org/git/mini-dinstall/mini-dinstall.git
+Vcs-Browser: http://git.debian.org/?p=mini-dinstall/mini-dinstall.git
 
 Package: mini-dinstall
 Architecture: all
-Depends: ${python:Depends}, python-apt, apt-utils
+Depends: ${python:Depends}, python-apt, apt-utils, python-crypto
 Suggests: debian-keyring
 Description: daemon for updating Debian packages in a repository
  This program implements a miniature version of the "dinstall" program

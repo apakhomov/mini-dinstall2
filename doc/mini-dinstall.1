@@ -148,6 +148,30 @@ to \fBERROR\fR.
 .B mail_to
 The user to whom logs should be mailed. Defaults to the current user.
 .TP
+.B mail_subject_template
+Style of the email subject. Available substitution variables are \fBsource\fR,
+\fBversion\fR, \fBmaintainer\fR, ... (all statements in .changes) and
+\fBchanges_without_dot\fR (same as \fBchanges\fR, but without lines with only a dot).
+Default is:
+.RS
+.PP
+ mini-dinstall: Successfully installed %(source)s %(version)s to %(distribution)s
+.RE
+.RE
+.TP
+.B mail_body_template
+Style of the email body. Valid values are the same as for the
+\fBmail_subject_template\fR option. Default is:
+.RS
+.PP
+ Package: %(source)s
+ Maintainer: %(maintainer)s
+ Changed-By: %(changed-by)s
+ Changes:
+ %(changes_without_dot)s
+.RE
+.RE
+.TP
 .B trigger_reindex
 In daemon mode, whether or not to recreate the Packages and Sources files after
 every upload. If you disable this, you probably want to enable
@@ -178,24 +202,20 @@ splits up the binary packages by architecture. Must be set.
 .PP
 Sources for the \(lqflat\(rq style should look like:
 .PP
-.NF
 .RS
  deb file:///home/walters/debian/ unstable/
  deb-src file:///home/walters/debian/ unstable/
  deb file:///home/walters/debian/ experimental/
  deb-src file:///home/walters/debian/ experimental/
 .RE
-.FI
 .PP
 Sources for the \(lqsubdir\(rq style should look like:
 .PP
-.NF
 .RS
  deb http://localhost/~walters/debian/ local/$(ARCH)/
  deb http://localhost/~walters/debian/ local/all/
  deb-src http://localhost/~walters/debian/ local/source/
 .RE
-.FI
 .RE
 .TP
 .B chown_changes_files
@@ -250,6 +270,9 @@ The Origin field in the Release file. Defaults to the current user's username.
 .B release_suite
 The Suite field in the Release file. Defaults to \*(lqNone\*(rq.
 .TP
+.B experimental_release
+The experimental_release field mark the release as experimental. Defaults to \*(lqNone\*(rq.
+.TP
 .B release_signscript
 If specified, this script will be called to sign Release files. It will be
 invoked in the directory containing the Release file, and should accept the
@@ -264,7 +287,6 @@ packages by using \fBdput\fR to upload them to a local repository, and then
 uses APT's \(lqfile\(rq method to retrieve them locally. Here's a sample
 \fBdput\fR stanza:
 .PP
-.NF
 .RS
  [local]
  fqdn = space\-ghost.verbum.private
@@ -273,7 +295,6 @@ uses APT's \(lqfile\(rq method to retrieve them locally. Here's a sample
  run_dinstall = 0
  post_upload_command = mini\-dinstall \-r
 .RE
-.FI
 .PP
 Obviously, you should replace the \(lqfqdn\(rq and \(lqincoming\(rq values with
 whatever is appropriate for your machine.  Some sample APT methods were listed
@@ -281,7 +302,6 @@ in the configuration section.
 .PP
 Now, all you have to do to test your Debian packages is:
 .PP
-.NF
 .RS
  $ dpkg-buildpackage
  $ dput local ../program_1.2.3\-1_powerpc.changes
@@ -289,12 +309,11 @@ Now, all you have to do to test your Debian packages is:
  $ apt\-get update
  $ apt\-get install program
 .RE
-.FI
 .\"
 .SH AUTHOR
 .B mini\-dinstall
 was originally written by Colin Walters <walters@debian.org> and is now
-maintained by Graham Wilson <graham@debian.org>.
+maintained by Christoph Goehre <christoph.goehre@gmx.de>.
 .\"
 .SH "SEE ALSO"
 \fBapt\-get\fR(8), \fBdnotify\fR(1), \fBdput\fR(1), \fBgpg\fI(1)
