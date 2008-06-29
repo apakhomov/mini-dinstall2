@@ -362,6 +362,7 @@ class DistOptionHandler:
         self._optionmap['release_label'] = ['str', self._optionmap['release_origin'][1]]
         self._optionmap['release_suite'] = ['str', None]
         self._optionmap['release_codename'] = ['str', None]
+        self._optionmap['experimental_release'] = ['bool', 0]
         self._optionmap['release_description'] = ['str', None]
         self._optionmap['release_signscript'] = ['str', None]
 
@@ -811,7 +812,7 @@ class ArchiveDir:
         else:
             (newupstreamver, newdebianver) = parse_versions(version)
         is_sourceful = 0
-        for file in map(lambda x: x[4], changefile.getFiles()):
+        for file in map(lambda x: x[2], changefile.getFiles()):
             match = debpackage_re.search(file)
             if match:
                 arch = match.group(3)
@@ -958,7 +959,7 @@ class ArchiveDir:
             else:
                 traceback.print_exception(Exception, exception, None, None, f)
             f.close()
-            for file in map(lambda x: x[4], changefile.getFiles()):
+            for file in map(lambda x: x[2], changefile.getFiles()):
                 if os.access(os.path.join(incomingdir, file), os.R_OK):
                     file = os.path.join(incomingdir, file)
                 else:
@@ -1049,7 +1050,7 @@ class ArchiveDirIndexer(threading.Thread):
         return apply(os.path.join, [self._name] + list(args))
 
     def _make_indexfile(self, dir, type, name):
-        cmdline = ['apt-ftparchive', type, dir]
+        cmdline = ['apt-ftparchive', type, dir, '--db', '%s.db' %dir]
         self._logger.debug("Running: " + string.join(cmdline, ' '))
         if no_act:
             return
@@ -1336,6 +1337,8 @@ class SimpleSubdirArchiveDirIndexer(ArchiveDirIndexer):
             if not codename:
                 codename = suite
             f.write('Codename: ' + '%s/%s\n' % (codename, arch))
+            if self._experimental_release:
+                f.write('NotAutomatic: yes\n')
             f.write('Date: ' + time.strftime("%a, %d %b %Y %H:%M:%S UTC", time.gmtime()) + '\n')
             f.write('Architectures: ' + arch + '\n')
             if self._release_description:
@@ -1424,6 +1427,8 @@ class FlatArchiveDirIndexer(ArchiveDirIndexer):
         if not codename:
             codename = suite
         f.write('Codename: ' + codename + '\n')
+        if self._experimental_release:
+            f.write('NotAutomatic: yes\n')
         f.write('Date: ' + time.strftime("%a, %d %b %Y %H:%M:%S UTC", time.gmtime()) + '\n')
         f.write('Architectures: ' + string.join(self._arches, ' ') + '\n')
         if self._release_description:

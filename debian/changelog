@@ -1,3 +1,24 @@
+mini-dinstall (0.6.25ubuntu1) intrepid; urgency=low
+
+  * Merge from Debian unstable (LP: #244270). Remaining Ubuntu changes:
+    - minidinstall/version.py: modify pkg_version to 0.6.25ubuntu1
+    - Modify all occurrences of /usr/share/keyrings/debian-keyring.gpg to
+      /usr/share/keyrings/ubuntu-archive-keyring.gpg
+    - debian/control: modify Maintainer to Ubuntu MOTU Developers
+    - debian/control: modify Suggests to ubuntu-keyring
+
+ -- Devid Filoni <d.filoni@techemail.com>  Sun, 29 Jun 2008 11:31:25 +0200
+
+mini-dinstall (0.6.25) unstable; urgency=low
+
+  * add experimental release support to Release file. Thanks to Stephan
+    Suerken (Closes: #336232)
+  * use '--db' to speed up apt-ftparchive run (Closes: #225483)
+  * check new Checksums-* fields in .dsc and .changes
+  * adjust manpage format and Standards-Version
+
+ -- Christoph Goehre <christoph.goehre@gmx.de>  Sat, 28 Jun 2008 19:15:56 +0200
+
 mini-dinstall (0.6.24ubuntu1) intrepid; urgency=low
 
   * Merge from Debian unstable, remaining Ubuntu changes:
