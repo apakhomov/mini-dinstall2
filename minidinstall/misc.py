@@ -21,19 +21,19 @@
 import os, errno, time, string, re, popen2
 
 def dup2(fd,fd2):
-  # dup2 with EBUSY retries (cf. dup2(2) and Debian bug #265513)
-  success = 0
-  tries = 0
-  while (not success):
-    try:
-      os.dup2(fd,fd2)
-      success = 1
-    except OSError, e:
-      if (e.errno != errno.EBUSY) or (tries >= 3):
-	raise
-      # wait 0-2 seconds befor next try
-      time.sleep(tries)
-      tries += 1
+    # dup2 with EBUSY retries (cf. dup2(2) and Debian bug #265513)
+    success = 0
+    tries = 0
+    while (not success):
+        try:
+            os.dup2(fd,fd2)
+            success = 1
+        except OSError, e:
+            if (e.errno != errno.EBUSY) or (tries >= 3):
+                raise
+            # wait 0-2 seconds befor next try
+            time.sleep(tries)
+            tries += 1
 
 def format_changes(L):
     """ remove changelog header and all lines with only a dot """
@@ -50,10 +50,10 @@ def get_file_sum(self, type, filename):
     """ generate hash sums for file """
     ret = _get_external_file_sum(self, type, filename)
     if not ret:
-        ret = _get_internal_file_sum(type, filename)
+        ret = _get_internal_file_sum(self, type, filename)
     return ret
 
-def _get_internal_file_sum(type, filename):
+def _get_internal_file_sum(self ,type, filename):
     """ generate hash sums for file with python modules """
     if type == 'md5':
         import md5
@@ -64,6 +64,7 @@ def _get_internal_file_sum(type, filename):
     elif type == 'sha256':
         from Crypto.Hash import SHA256
         sum = SHA256.new()
+    self._logger.debug("Generate %s (python-internal) for %s" % (type, filename))
     f = open(filename)
     buf = f.read(8192)
     while buf != '':

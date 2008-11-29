@@ -1,3 +1,30 @@
+mini-dinstall (0.6.26ubuntu1) jaunty; urgency=low
+
+  * Merge from debian unstable, remaining changes: (LP: #303173)
+    - minidinstall/version.py: set current version.
+    - debian/control: modify Suggests to ubuntu-keyring
+    - Change all occurrences of /usr/share/keyrings/debian-keyring.gpg to
+      /usr/share/keyrings/ubuntu-archive-keyring.gpg.
+
+ -- Bhavani Shankar <right2bhavi@gmail.com>  Sat, 29 Nov 2008 20:07:04 +0530
+
+mini-dinstall (0.6.26) unstable; urgency=low
+
+  [ Christoph Goehre ]
+  * [62bfe94] debug logging for python-internal hash generation
+  * [54c6c7c] activate DM-Upload-Allowed
+  * [048454d] depend on gpgv
+  * [59d3992] check mail_template strings for existence
+  * [a4cc929] expand tabs and remove tailing whitespaces
+  * [5bbaa28] move changes file in _reject_changefile() too
+
+  [ Guido Guenther ]
+  * [828c0b5] print path to changes file on missing md5sums (Closes: #496229)
+  * [540ebcf] allow keyrings and extra_keyrings per repository
+    (Closes: #497079)
+
+ -- Christoph Goehre <christoph.goehre@gmx.de>  Mon, 17 Nov 2008 18:35:35 +0100
+
 mini-dinstall (0.6.25ubuntu1) intrepid; urgency=low
 
   * Merge from Debian unstable (LP: #244270). Remaining Ubuntu changes:
