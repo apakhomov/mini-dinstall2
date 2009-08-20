@@ -1,3 +1,31 @@
+mini-dinstall (0.6.27ubuntu1) karmic; urgency=low
+
+  * Merge from debian unstable, remaining changes: LP: #416455
+    - minidinstall/version.py: set current version.
+    - debian/control: modify Suggests to ubuntu-keyring
+    - Change all occurrences of /usr/share/keyrings/debian-keyring.gpg to
+      /usr/share/keyrings/ubuntu-archive-keyring.gpg.
+
+ -- Bhavani Shankar <right2bhavi@gmail.com>  Thu, 20 Aug 2009 19:49:17 +0530
+
+mini-dinstall (0.6.27) unstable; urgency=low
+
+  [ Christoph Goehre ]
+  * [fdef0f3] regenerate reliable Release files on archive_style
+    simple-subdir
+  * [0607dbf] demote depends on gpgv to recommends
+  * [b514d38] send upload information mails with utf-8 charset
+    (Closes: #505144)
+  * [364119c] allow verify_sigs per repository (Closes: #516263)
+  * [9017b45] support distribution aliases, thanks Luca Capello
+    (Closes: #291340)
+  * [039b733] add generic do_and_log function
+  * [15f8c38] allow to disable chmod on incomming (Closes: #535558)
+  * [cf1424e] add 'X-Mini-Dinstall' header field to upload email
+    (Closes: #539124)
+
+ -- Christoph Goehre <christoph.goehre@gmx.de>  Sun, 16 Aug 2009 18:17:14 +0200
+
 mini-dinstall (0.6.26ubuntu1) jaunty; urgency=low
 
   * Merge from debian unstable, remaining changes: (LP: #303173)
