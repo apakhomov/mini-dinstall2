@@ -4,15 +4,15 @@ Section: devel
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 XSBC-Original-Maintainer: Christoph Goehre <christoph.goehre@gmx.de>
 Uploaders: Guido Guenther <agx@sigxcpu.org>
-Build-Depends: cdbs, debhelper (>= 4.1.25), python-dev, python-support (>= 0.3)
+Build-Depends: cdbs, debhelper (>= 7), python, python-support (>= 0.3)
 DM-Upload-Allowed: yes
-Standards-Version: 3.8.0
+Standards-Version: 3.8.4
 Vcs-Git: git://git.debian.org/git/mini-dinstall/mini-dinstall.git
 Vcs-Browser: http://git.debian.org/?p=mini-dinstall/mini-dinstall.git
 
 Package: mini-dinstall
 Architecture: all
-Depends: ${python:Depends}, python-apt, apt-utils, python-crypto
+Depends: ${python:Depends}, python-apt (>= 0.7.93), apt-utils, python-crypto, ${misc:Depends}
 Recommends: gpgv
 Suggests: ubuntu-keyring
 Description: daemon for updating Debian packages in a repository
