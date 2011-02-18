@@ -1,3 +1,9 @@
+mini-dinstall (0.6.28.1ubuntu2) natty; urgency=low
+
+  * mini-dinstall: Fix error using logging.StreamHandler (LP: #721413)
+
+ -- Sameer Morar <smorar@gmail.com>  Fri, 18 Feb 2011 20:09:19 +0200
+
 mini-dinstall (0.6.28.1ubuntu1) natty; urgency=low
 
   * Merge from debian unstable. Remaining changes:

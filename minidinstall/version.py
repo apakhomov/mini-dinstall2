@@ -1,1 +1,1 @@
-pkg_version = "0.6.28.1ubuntu1"
+pkg_version = "0.6.28.1ubuntu2"
