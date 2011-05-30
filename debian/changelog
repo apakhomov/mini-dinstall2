@@ -1,3 +1,10 @@
+mini-dinstall (0.6.28.1ubuntu3) oneiric; urgency=low
+
+  * DebianSigVerifier.py: (LP: 3417)
+    Remove debian-keyring.pgp, since that change was lost in merge
+
+ -- Mackenzie Morgan <maco.m@ubuntu.com>  Mon, 30 May 2011 22:35:00 -0400
+
 mini-dinstall (0.6.28.1ubuntu2) natty; urgency=low
 
   * mini-dinstall: Fix error using logging.StreamHandler (LP: #721413)
