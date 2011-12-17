@@ -1,3 +1,31 @@
+mini-dinstall (0.6.29ubuntu1) precise; urgency=low
+
+  * Merge from debian testing. (LP: #905671) Remaining changes:
+    - minidinstall/version.py: set current version.
+    - debian/control: modify Suggests to ubuntu-keyring
+    - Change all occurrences of /usr/share/keyrings/debian-keyring.gpg to
+      /usr/share/keyrings/ubuntu-archive-keyring.gpg.
+    - minidinstall/DebianSigVerifier.py: Remove debian-keyring.pgp.
+  * mini-dinstall: Dropped applied in Debian.
+
+ -- Mahyuddin Susanto <udienz@ubuntu.com>  Sat, 17 Dec 2011 18:58:07 +0700
+
+mini-dinstall (0.6.29) unstable; urgency=low
+
+  [ Christoph Goehre ]
+  * [d4fa57e] logging.StreamHandler use sys.stderr as default output
+    (Closes: #613992, #644419)
+  * [91d0786] add Date and Message-ID header fields in email from mini-dinstall
+  * [d7f3643] bump up Standards-Version to 3.9.2
+  * [b659d79] DM-Upload-Allowed is superfluous since I'm DD
+
+  [ Sven Hartge ]
+  * [b27e3ab] add support for new InRelease file
+
+  [ Christoph Goehre ]
+
+ -- Christoph Goehre <christoph.goehre@gmx.de>  Thu, 06 Oct 2011 19:50:46 +0200
+
 mini-dinstall (0.6.28.1ubuntu3) oneiric; urgency=low
 
   * DebianSigVerifier.py: (LP: 3417)
