@@ -1,3 +1,9 @@
+mini-dinstall (0.6.29ubuntu1+hh1) unstable; urgency=low
+
+  * mini-dinstall: Add atomic indexes option
+
+ -- Anton Pakhomov <an.pakhomov@hh.ru>  Thu, 26 Nov 2015 16:38:59 +0300
+
 mini-dinstall (0.6.29ubuntu1) precise; urgency=low
 
   * Merge from debian testing. (LP: #905671) Remaining changes:
